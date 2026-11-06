@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Saisie Ligne Muller</title>
+<meta name="description" content="Saisie des postes de la ligne Muller : ouverture, changements de série, arrêts.">
+<meta name="theme-color" content="#2f4a63">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Muller">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="hrow">
+    <h1>Ligne Muller<small>Saisie par poste · Top shells</small></h1>
+    <div class="plate" id="plate">S— · —</div>
+  </div>
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tab-saisie" aria-selected="true">Saisie</button>
+    <button role="tab" id="tab-semaine" aria-selected="false">Semaine</button>
+  </div>
+</header>
+
+<main>
+  <div class="banner" id="status" hidden></div>
+  <div class="banner" id="outbox" hidden></div>
+
+  <section id="view-saisie" class="view">
+    <form id="form" class="card" novalidate>
+      <h2 id="formTitle">Nouveau poste</h2>
+      <div class="grid2">
+        <div><label for="f-date">Date</label><input type="date" id="f-date" required></div>
+        <div><span class="lbl">Semaine</span><input id="f-week" class="num" readonly tabindex="-1"></div>
+      </div>
+      <div><span class="lbl">Poste</span>
+        <div class="seg" id="seg-poste">
+          <button type="button" data-v="Matin">Matin</button>
+          <button type="button" data-v="Après-midi">Après-midi</button>
+          <button type="button" data-v="Nuit">Nuit</button>
+        </div>
+      </div>
+      <div id="equipeBox"><span class="lbl">Régleur</span>
+        <div class="seg" id="seg-equipe">
+          <button type="button" data-v="MR">MR</button>
+          <button type="button" data-v="BC">BC</button>
+        </div>
+        <p class="hint" id="equipeHint"></p>
+      </div>
+      <p class="hint" id="nuitHint" hidden>Nuit : indiquez la date du matin où le poste se termine (nuit de dimanche à lundi = lundi).</p>
+      <div><label for="f-ref">Référence produite</label>
+        <input id="f-ref" list="refs" placeholder="ex. TS-128" autocomplete="off"><datalist id="refs"></datalist></div>
+      <div class="grid2">
+        <div><label for="f-ouv">Heures d'ouverture</label><input type="number" id="f-ouv" class="num" inputmode="decimal" step="0.25" min="0" max="24" placeholder="7,5"></div>
+        <div><label for="f-pcs">Pièces produites</label><input type="number" id="f-pcs" class="num" inputmode="numeric" min="0" placeholder="0"></div>
+      </div>
+      <div class="grid2">
+        <div><label for="f-nch">Changements de série</label>
+          <div class="stepper"><button type="button" id="nch-minus" aria-label="Moins">−</button><input type="number" id="f-nch" class="num" inputmode="numeric" min="0" value="0"><button type="button" id="nch-plus" aria-label="Plus">+</button></div></div>
+        <div><label for="f-tch">Temps changement (min)</label><input type="number" id="f-tch" class="num" inputmode="numeric" min="0" placeholder="0"></div>
+      </div>
+    </form>
+
+    <div class="card">
+      <h2>Arrêts du poste</h2>
+      <div id="stops" class="stops"></div>
+      <button type="button" class="ghost" id="addStop">+ Ajouter un arrêt</button>
+      <p class="hint" id="stopTotal"></p>
+    </div>
+
+    <div class="card">
+      <div><label for="f-com">Commentaire</label><textarea id="f-com" placeholder="Ce qui s'est passé sur le poste"></textarea></div>
+      <div><label for="f-aut">Saisi par</label><input id="f-aut" autocomplete="name" placeholder="Votre nom (mémorisé sur cet appareil)"></div>
+      <div class="actions">
+        <button type="button" class="secondary" id="cancelEdit" hidden>Annuler</button>
+        <button type="button" class="primary" id="save">Enregistrer le poste</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-semaine" class="view" hidden>
+    <div class="card">
+      <div class="weeknav">
+        <button class="secondary" id="wPrev" aria-label="Semaine précédente">‹</button>
+        <div class="wk" id="wLabel">S—</div>
+        <button class="secondary" id="wNext" aria-label="Semaine suivante">›</button>
+      </div>
+      <div class="tiles" id="tiles"></div>
+      <a class="secondary btnlink" id="export" href="#">Exporter pour « Saisie manuelle » (CSV)</a>
+    </div>
+    <div class="card"><h2>Causes d'arrêt</h2><div class="par" id="pareto"></div></div>
+    <div class="card"><h2>Postes saisis</h2><div id="list"></div></div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

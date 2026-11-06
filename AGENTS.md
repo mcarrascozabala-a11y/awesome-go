@@ -10,6 +10,7 @@ This document summarizes the project context and the conventions that language m
   - `main.go`: reads `README.md`, builds category pages, and writes artifacts to `out/` using templates in `tmpl/`.
   - `pkg/markdown` and `pkg/slug`: helper packages used by the generator.
   - `.github/workflows/`: CI pipelines for PR quality validation, stale checks, site deployment, and Go tests.
+  - `muller-app/`: standalone shift-entry app (separate Go module, SQLite + PWA). It is not part of the list or the site generator; test it with `cd muller-app && go test ./...`. See `muller-app/README.md`.
 
 ## When Modifying the Awesome List
 
