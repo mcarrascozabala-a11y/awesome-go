@@ -22,7 +22,10 @@ MULLER_PASSWORD='choose-a-shared-password' go run .
 | Database file | `-db` | `MULLER_DB` | `muller.db` |
 | Shared password (HTTP Basic auth, any user name) | | `MULLER_PASSWORD` | none: open access |
 
-With Docker:
+To install it on a server for the line (Docker + HTTPS, tablet setup,
+backups), follow [`deploy/README.md`](deploy/README.md).
+
+With Docker only (no HTTPS):
 
 ```sh
 docker build -t muller-app muller-app

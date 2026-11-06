@@ -1,0 +1,6 @@
+# The server has a public domain name pointing to it (ports 80 and 443 open
+# to the internet): Caddy gets a free Let's Encrypt certificate on its own.
+{$MULLER_SITE} {
+	encode gzip
+	reverse_proxy app:8080
+}

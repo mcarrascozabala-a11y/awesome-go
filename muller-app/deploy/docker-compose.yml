@@ -1,0 +1,29 @@
+# Ligne Muller on one server: the app plus Caddy for HTTPS.
+# Usage: cp .env.example .env, edit it, then `docker compose up -d --build`.
+services:
+  app:
+    build: ..
+    restart: unless-stopped
+    environment:
+      MULLER_PASSWORD: ${MULLER_PASSWORD:?set MULLER_PASSWORD in .env}
+    volumes:
+      - muller-data:/data
+
+  caddy:
+    image: caddy:2.10.2
+    restart: unless-stopped
+    depends_on: [app]
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      MULLER_SITE: ${MULLER_SITE:?set MULLER_SITE in .env}
+    volumes:
+      - ./Caddyfile.${MULLER_HTTPS:-internal}:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  muller-data:
+  caddy-data:
+  caddy-config:
